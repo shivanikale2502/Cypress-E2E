@@ -26,6 +26,7 @@ module.exports = defineConfig({
       LOGINURL:'https://naveenautomationlabs.com/opencart/index.php?route=account/login',
       FORGOTPASSURL:'https://naveenautomationlabs.com/opencart/index.php?route=account/forgotten',
       CONTACTUSURL:'https://naveenautomationlabs.com/opencart/index.php?route=information/contact',
+      SEARCHURL:'https://naveenautomationlabs.com/opencart/index.php?route=product/category&path=17',
 
 
     },
