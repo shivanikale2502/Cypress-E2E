@@ -1,0 +1,105 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2025-06-27T13:59:44.620Z",
+    "end": "2025-06-27T13:59:51.503Z",
+    "duration": 6883,
+    "testsRegistered": 1,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "344d272b-aa47-4574-9257-117e4a391054",
+      "title": "",
+      "fullFile": "cypress\\e2e\\tests\\RegisterTest.js",
+      "file": "cypress\\e2e\\tests\\RegisterTest.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "a0e71b8f-dc5f-4dc7-a1e2-75436df1353a",
+          "title": "verify the registration functionality",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "verify user should be able to register successfully",
+              "fullTitle": "verify the registration functionality verify user should be able to register successfully",
+              "timedOut": null,
+              "duration": 4454,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "registerobj.openurl();\nregisterobj.enterfirstname(userData.firstname);\nregisterobj.enterlastname(userData.lastname);\nregisterobj.enteremailid(userData.email);\nregisterobj.entertelephone(userData.telephone);\nregisterobj.enterpassword(userData.password);\nregisterobj.enterconfirmpassword(userData.passwordConfirm);\nregisterobj.enterprivacy();\nregisterobj.entercontinue();\nregisterobj.checkRegistrationSuccess();",
+              "err": {},
+              "uuid": "26a8a4d7-adb0-46eb-8b21-6e8b50c42c17",
+              "parentUUID": "a0e71b8f-dc5f-4dc7-a1e2-75436df1353a",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "26a8a4d7-adb0-46eb-8b21-6e8b50c42c17"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 4454,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports/mochawesome",
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "6.2.0"
+    }
+  }
+}

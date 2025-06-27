@@ -1,0 +1,12 @@
+{
+  "firstname": "Avery",
+  "lastname": "Brightwell",
+  "email": "avery.brightwell+001@example.com",
+  "telephone": "+1234567890",
+  "password": "TestPass!2025",
+  "passwordConfirm": "TestPass!2025",
+  "loginemail": "avery.brightwell+001@example.com",
+  "loginpassword": "TestPass!2025",
+  "enquirymessage": "Test Enquiry123",
+  "help": "need help"
+}

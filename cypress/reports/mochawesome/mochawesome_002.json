@@ -1,0 +1,124 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 2,
+    "passes": 2,
+    "pending": 0,
+    "failures": 0,
+    "start": "2025-06-27T13:59:36.008Z",
+    "end": "2025-06-27T13:59:42.027Z",
+    "duration": 6019,
+    "testsRegistered": 2,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "1211986a-6a37-4308-82fe-5a39a521eb04",
+      "title": "",
+      "fullFile": "cypress\\e2e\\tests\\LoginPageTest.js",
+      "file": "cypress\\e2e\\tests\\LoginPageTest.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "78816bff-f484-4693-a692-b134515dc5ad",
+          "title": "verify the login functionality",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "verify user should be able to login successfully",
+              "fullTitle": "verify the login functionality verify user should be able to login successfully",
+              "timedOut": null,
+              "duration": 3027,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "loginpageobj.openurl();\nloginpageobj.enteremailid(userData.loginemail);\nloginpageobj.enterpassword(userData.loginpassword);\nloginpageobj.clickonlogin();",
+              "err": {},
+              "uuid": "4c26355f-853d-4af1-817f-ef5aaf929725",
+              "parentUUID": "78816bff-f484-4693-a692-b134515dc5ad",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "verify user should be able to forgot password",
+              "fullTitle": "verify the login functionality verify user should be able to forgot password",
+              "timedOut": null,
+              "duration": 812,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "loginpageobj.openurl();\nloginpageobj.clickforgotpass();",
+              "err": {},
+              "uuid": "8100fb6b-54ae-4622-a39b-49cb73721d81",
+              "parentUUID": "78816bff-f484-4693-a692-b134515dc5ad",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "4c26355f-853d-4af1-817f-ef5aaf929725",
+            "8100fb6b-54ae-4622-a39b-49cb73721d81"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 3839,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports/mochawesome",
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "6.2.0"
+    }
+  }
+}
