@@ -1,27 +1,23 @@
-name: Cypress Cross-Browser + Mochawesome Report
+name: Cypress Tests
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
   pull_request:
-    branches:
-      - main
-    types:
-      - closed
+    branches: [main]
 
 jobs:
   cypress-tests:
-    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.pull_request.merged == true)
+    name: Run Cypress Tests on ${{ matrix.browser }}
+    runs-on: ubuntu-latest
+
     strategy:
       matrix:
-        browser: [chrome, edge, firefox]
-    runs-on: ubuntu-latest
-    name: Run on ${{ matrix.browser }}
+        browser: [chrome, firefox, edge]
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -29,58 +25,23 @@ jobs:
           node-version: 18
 
       - name: Install dependencies
-        run: npm install
-
-      - name: Clean previous Mochawesome reports
-        run: npm run clean-reports
+        run: npm ci
 
       - name: Run Cypress tests on ${{ matrix.browser }}
         run: |
-          npx cypress run --browser ${{ matrix.browser }} \
+          npx cypress run --browser ${{ matrix.browser }} --headless \
             --reporter mochawesome \
             --reporter-options reportDir=cypress/reports/mochawesome,overwrite=false,html=false,json=true
 
-      - name: Upload Mochawesome JSON (${{ matrix.browser }})
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: mochawesome-json-${{ matrix.browser }}
-          path: cypress/reports/mochawesome/*.json
-
-  merge-report:
-    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.pull_request.merged == true)
-    needs: cypress-tests
-    runs-on: ubuntu-latest
-    name: Merge & Generate Final Report
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Download artifacts
-        uses: actions/download-artifact@v4
-        with:
-          path: mochawesome-artifacts
-
-      - name: Merge Mochawesome JSON
+      - name: Merge Mochawesome Reports
+        if: ${{ matrix.browser == 'chrome' }}  # Only do this once
         run: |
-          mkdir -p cypress/reports/mochawesome
-          find mochawesome-artifacts -name '*.json' -exec cp {} cypress/reports/mochawesome/ \;
-          npx mochawesome-merge cypress/reports/mochawesome/*.json -o cypress/reports/mochawesome/mochawesome.json
+          npx mochawesome-merge cypress/reports/mochawesome/*.json > mochawesome.json
+          npx marge mochawesome.json -f index -o cypress/reports/final
 
-      - name: Generate HTML Report
-        run: npx marge cypress/reports/mochawesome/mochawesome.json -f index -o cypress/reports/final
-
-      - name: Upload Final HTML Report
+      - name: Upload HTML Report
+        if: ${{ matrix.browser == 'chrome' }}
         uses: actions/upload-artifact@v4
         with:
-          name: mochawesome-html-report
-          path: cypress/reports/final
+          name: mochawesome-report
+          path: cypress/reports/final/index.html
