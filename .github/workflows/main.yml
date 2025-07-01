@@ -1,14 +1,18 @@
 name: Cypress Cross-Browser + Mochawesome Report
 
 on:
+  push:
+    branches:
+      - main
   pull_request:
     branches:
       - main
-    types: [closed]
+    types:
+      - closed
 
 jobs:
   cypress-tests:
-    if: github.event.pull_request.merged == true
+    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.pull_request.merged == true)
     strategy:
       matrix:
         browser: [chrome, edge, firefox]
@@ -30,7 +34,7 @@ jobs:
       - name: Clean previous Mochawesome reports
         run: npm run clean-reports
 
-      - name: Run Cypress on ${{ matrix.browser }}
+      - name: Run Cypress tests on ${{ matrix.browser }}
         run: |
           npx cypress run --browser ${{ matrix.browser }} \
             --reporter mochawesome \
@@ -44,10 +48,10 @@ jobs:
           path: cypress/reports/mochawesome/*.json
 
   merge-report:
-    if: github.event.pull_request.merged == true
+    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.pull_request.merged == true)
     needs: cypress-tests
     runs-on: ubuntu-latest
-    name: Merge & Generate Mochawesome Report
+    name: Merge & Generate Final Report
 
     steps:
       - name: Checkout code
@@ -61,22 +65,21 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Download all artifacts
+      - name: Download artifacts
         uses: actions/download-artifact@v4
         with:
           path: mochawesome-artifacts
 
-      - name: Merge all JSON reports
+      - name: Merge Mochawesome JSON
         run: |
           mkdir -p cypress/reports/mochawesome
           find mochawesome-artifacts -name '*.json' -exec cp {} cypress/reports/mochawesome/ \;
           npx mochawesome-merge cypress/reports/mochawesome/*.json -o cypress/reports/mochawesome/mochawesome.json
 
-      - name: Generate HTML report
-        run: |
-          npx marge cypress/reports/mochawesome/mochawesome.json -f index -o cypress/reports/final
+      - name: Generate HTML Report
+        run: npx marge cypress/reports/mochawesome/mochawesome.json -f index -o cypress/reports/final
 
-      - name: Upload final Mochawesome HTML
+      - name: Upload Final HTML Report
         uses: actions/upload-artifact@v4
         with:
           name: mochawesome-html-report
