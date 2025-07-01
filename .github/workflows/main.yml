@@ -1,0 +1,60 @@
+name: Cypress + Mochawesome Report on PR Merge to Main
+
+on:
+  pull_request:
+    branches:
+      - main
+    types: [closed]
+
+jobs:
+  cypress-run:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run Cypress Tests (with Mochawesome)
+        run: npm test
+
+      - name: Generate Final Mochawesome HTML Report
+        run: |
+          npm run merge-report
+          npm run generate-report
+
+      - name: Upload Final HTML Report
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: mochawesome-html-report
+          path: cypress/reports/final
+
+      - name: Upload Raw JSON Reports
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: mochawesome-json
+          path: cypress/reports/mochawesome/*.json
+
+      - name: Upload Cypress Videos (optional)
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: cypress-videos
+          path: cypress/videos
+
+      - name: Upload Cypress Screenshots (optional)
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots
