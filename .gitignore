@@ -1,0 +1,40 @@
+# Node modules
+node_modules/
+
+# Cypress test results
+cypress/videos/
+cypress/screenshots/
+cypress/reports/mochawesome/
+cypress/reports/final/
+mochawesome-report/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDE/editor folders
+.vscode/
+.idea/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Mac/Linux temporary files
+*.swp
+*.swo
+*~
+
+# Coverage and output
+coverage/
+dist/
+build/
+
+# GitHub Actions artifacts (if cloned with them)
+*.artifact.zip
