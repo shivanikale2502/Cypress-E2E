@@ -7,16 +7,11 @@ on:
     branches: [main]
 
 jobs:
-  cypress-tests:
-    name: Run Cypress Tests on ${{ matrix.browser }}
-    runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        browser: [chrome, firefox, edge]
+  run-cypress-all:
+    runs-on: windows-latest  # PowerShell support needed for clean-reports
 
     steps:
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Setup Node.js
@@ -27,20 +22,27 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Run Cypress tests on ${{ matrix.browser }}
-        run: |
-          npx cypress run --browser ${{ matrix.browser }} --headless \
-            --reporter mochawesome \
-            --reporter-options reportDir=cypress/reports/mochawesome,overwrite=false,html=false,json=true
+      - name: Clean previous mochawesome reports
+        run: npm run clean-reports
 
-      - name: Merge Mochawesome Reports
-        if: ${{ matrix.browser == 'chrome' }}  # Only do this once
-        run: |
-          npx mochawesome-merge cypress/reports/mochawesome/*.json > mochawesome.json
-          npx marge mochawesome.json -f index -o cypress/reports/final
+      # Run Cypress tests on each browser headlessly
+      - name: Run Cypress tests on Chrome
+        run: npx cypress run --browser chrome --headless --reporter mochawesome --reporter-options reportDir=cypress/reports/mochawesome,overwrite=false,html=false,json=true
 
-      - name: Upload HTML Report
-        if: ${{ matrix.browser == 'chrome' }}
+      - name: Run Cypress tests on Firefox
+        run: npx cypress run --browser firefox --headless --reporter mochawesome --reporter-options reportDir=cypress/reports/mochawesome,overwrite=false,html=false,json=true
+
+      - name: Run Cypress tests on Edge
+        run: npx cypress run --browser edge --headless --reporter mochawesome --reporter-options reportDir=cypress/reports/mochawesome,overwrite=false,html=false,json=true
+
+      # Post test flow (merge + generate report)
+      - name: Merge mochawesome JSON reports
+        run: npm run merge-report
+
+      - name: Generate final HTML report
+        run: npm run generate-report
+
+      - name: Upload final mochawesome HTML report
         uses: actions/upload-artifact@v4
         with:
           name: mochawesome-report
