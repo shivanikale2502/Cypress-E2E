@@ -5,6 +5,8 @@
   "telephone": "+1234567890",
   "password": "TestPass!2025",
   "passwordConfirm": "TestPass!2025",
+    "passwordMismatch": "TestPass!225",
+
   "loginemail": "avery.brightwell+001@example.com",
   "loginpassword": "TestPass!2025",
   "enquirymessage": "Test Enquiry123",
