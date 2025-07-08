@@ -1,14 +1,6 @@
-name: Cypress Tests
-
-on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
-
 jobs:
   run-tests:
-    name: Run Cypress on ${{ matrix.browser }}
+    name: Run Cypress in Parallel on ${{ matrix.browser }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -26,9 +18,18 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Run Cypress tests on ${{ matrix.browser }}
+      - name: Run Cypress tests in parallel on ${{ matrix.browser }}
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
         run: |
-          npx cypress run --browser ${{ matrix.browser }} --headless \
+          npx cypress run \
+            --record \
+            --parallel \
+            --key $CYPRESS_RECORD_KEY \
+            --browser ${{ matrix.browser }} \
+            --group ${{ matrix.browser }}-group \
+            --ci-build-id ${{ github.run_id }} \
+            --headless \
             --reporter mochawesome \
             --reporter-options reportDir=cypress/reports/mochawesome,overwrite=false,html=false,json=true
 
@@ -37,38 +38,3 @@ jobs:
         with:
           name: mochawesome-${{ matrix.browser }}
           path: cypress/reports/mochawesome/*.json
-
-  generate-report:
-    name: Generate Final Report
-    runs-on: ubuntu-latest
-    needs: run-tests
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Download All JSON Reports
-        uses: actions/download-artifact@v4
-        with:
-          path: all-json-reports
-
-      - name: Merge and Generate Final Report
-        run: |
-          mkdir -p merged-json
-          find all-json-reports -name '*.json' -exec cp {} merged-json/ \;
-          npx mochawesome-merge merged-json/*.json > mochawesome.json
-          npx marge mochawesome.json -f index -o cypress/reports/final
-
-      - name: Upload Final HTML Report
-        uses: actions/upload-artifact@v4
-        with:
-          name: mochawesome-report
-          path: cypress/reports/final/index.html
