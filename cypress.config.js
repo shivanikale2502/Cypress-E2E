@@ -2,12 +2,14 @@ const { defineConfig } = require("cypress");
 
 
 module.exports = defineConfig({
+  projectId: "8jj1c7",
    reporter: "mochawesome", // ✅ Added for Mochawesome
   reporterOptions: {
     reportDir: "cypress/reports/mochawesome",
     overwrite: false,
     html: false,
-    json: true
+    json: true,
+    
   },
   e2e: {
     // Add custom spec pattern to allow .js and .tsx files

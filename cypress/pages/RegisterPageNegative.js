@@ -14,10 +14,10 @@ export class RegisterPageNegative {
         verfiylastnamemessage: '//div[text()="Last Name must be between 1 and 32 characters!"]',
         verifyemailmessage: '//div[text()="E-Mail Address does not appear to be valid!"]',
         verifytelmessage: '//div[text()="Telephone must be between 3 and 32 characters!"]',
-        verfiypassmessage:'//div[text()="Password must be between 4 and 20 characters!"]',
-        verifyprivacymessage:'//div[text()=" Warning: You must agree to the Privacy Policy!"]',
-        passwordmismatch:"#input-confirm",
-        verifymismatchpassmessage:"//div[text()='Password confirmation does not match password!']"
+        verfiypassmessage: '//div[text()="Password must be between 4 and 20 characters!"]',
+        verifyprivacymessage: '//div[text()=" Warning: You must agree to the Privacy Policy!"]',
+        passwordmismatch: "#input-confirm",
+        verifymismatchpassmessage: "//div[text()='Password confirmation does not match password!']"
 
 
 
@@ -64,27 +64,27 @@ export class RegisterPageNegative {
     }
     verfiyemptylastnamemessage() {
         cy.xpath(this.weblocators.verfiylastnamemessage).should('have.text', 'Last Name must be between 1 and 32 characters!');
-    } 
+    }
     verifyemptyemailmessage() {
         cy.xpath(this.weblocators.verifyemailmessage).should('have.text', 'E-Mail Address does not appear to be valid!');
-    } 
+    }
     verifyemptytelmessage() {
         cy.xpath(this.weblocators.verifytelmessage).should('have.text', 'Telephone must be between 3 and 32 characters!');
     }
     verifyemptypassmessage() {
         cy.xpath(this.weblocators.verfiypassmessage).should('have.text', 'Password must be between 4 and 20 characters!');
     }
-  verifyuncheckprivacymessage(){
-    cy.xpath(this.weblocators.verifyprivacymessage).should('have.text',' Warning: You must agree to the Privacy Policy!')
-  }
-  entermismatchpass(mispass){
-        cy.get(this.weblocators.passwordmismatch).type(mispass)
+    verifyuncheckprivacymessage() {
+        cy.xpath(this.weblocators.verifyprivacymessage).should('have.text', ' Warning: You must agree to the Privacy Policy!')
+    }
+    entermismatchpass(mispass) {
+        cy.get(this.weblocators.passwordmismatch).type(mispass);
 
-  }
-  verifymismatchpassmessageerror(){
-            cy.xpath(this.weblocators.verifymismatchpassmessage);
+    }
+    verifymismatchpassmessageerror() {
+        cy.xpath(this.weblocators.verifymismatchpassmessage);
 
-  }
+    }
 
 
 }
