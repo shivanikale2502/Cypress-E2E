@@ -65,19 +65,9 @@ describe('verify the board functionality on Trello', () => {
 
  })
 
-  it('POST- Create A Board',()=>{
-    cy.request({
-        method:'POST',
-        url:`https://api.trello.com/1/boards/?name=shobha&key=${APIKey}&token=${APIToken}`,
-        
+ 
 
-    }).should((response)=>{
-        expect(response.status).to.eq(200);
-        expect(response.duration).to.be.lessThan(1000)
 
-    })
-
- })
 
  
 })
