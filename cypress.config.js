@@ -31,6 +31,10 @@ module.exports = defineConfig({
       SEARCHURL:'https://naveenautomationlabs.com/opencart/index.php?route=product/category&path=17',
 
 
+       "APIKey":"eea45afce532d140a82d28bd49454baf",
+      "APIToken":"ATTAb252d8f2942a95bf8f6f411dcb2612bb9ca2816723d2d6c396a943deb8a47e00094E40AA"
+
+
     },
     
     
